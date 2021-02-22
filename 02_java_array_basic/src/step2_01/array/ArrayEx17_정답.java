@@ -26,6 +26,8 @@ import java.util.Scanner;
 
 
 //2021.02.19 19:50 ~  21:19
+
+
 public class ArrayEx17_정답 {
 
 	public static void main(String[] args) {
@@ -48,6 +50,11 @@ public class ArrayEx17_정답 {
 			}
 		}
 		
+		System.out.println("1. [ 사용자 p1 ]  vs  [ 컴퓨터 ]");			
+		System.out.println("2. [ 사용자 p1 ]  vs  [ 사용자 p2 ]");
+		System.out.print("선택하세요 => ");
+		int choosedNumber = scan.nextInt();
+		
 		
 		while (true) {
 			
@@ -58,6 +65,8 @@ public class ArrayEx17_정답 {
 			int randomColumn = -1;
 			int randomRow = -1;
 			
+			int rowofP2 = -1;
+			int columnofP2 = -1;
 			
 		
 			if (isPrint == true ) {	
@@ -130,19 +139,72 @@ public class ArrayEx17_정답 {
 			
 			else {		//컴퓨터 차례
 				
-				System.out.println();
-				System.out.println(" [ 컴퓨터 차례 ]");
 				
-				do {			//랜덤 인덱스 선택
-				
-					randomRow = rand.nextInt(3);
-					randomColumn = rand.nextInt(3);
+				if (choosedNumber == 1) {			//컴퓨터와 대결
 					
-				}while(game[randomRow][randomColumn] != ' ');
+					
+					System.out.println();
+					System.out.println(" [ 컴퓨터 차례 ]");
+					
+					do {			//랜덤 인덱스 선택
+						
+						randomRow = rand.nextInt(3);
+						randomColumn = rand.nextInt(3);
+						
+					}while(game[randomRow][randomColumn] != ' ');
+					
+					
+					game[randomRow][randomColumn] = 'X';
+					whoseturnofGame = true;
+					
+				}
 				
-			
-				game[randomRow][randomColumn] = 'X';
-				whoseturnofGame = true;
+				else {			//사용자끼리의 대결
+					
+					
+					System.out.println();
+					System.out.println("[ p2 사용자 차례 ]");
+					System.out.print("[p2] 행 입력 (0~2) : ");		// 행 입력받기
+					rowofP2 = scan.nextInt();
+					
+					if (rowofP2 < 0 || rowofP2 > 2) {
+						
+						System.out.println(" 0~2 사이의 행을 입력하세요");
+						isPrint = false;
+						continue;
+					}
+					
+					System.out.print("[p2] 열 입력 (0~2) : ");		//열 입력받기
+					columnofP2 = scan.nextInt();
+					
+					if (columnofP2 < 0 || columnofP2 > 2) {
+						
+						System.out.println(" 0~2 사이의 행을 입력하세요");
+						isPrint = false;
+						continue;
+					}
+
+					
+					//인덱스 선택 가능 or 불가능?
+					if ( game[rowofP2][columnofP2] == ' ') {			//선택한 인덱스가 비어있는 경우
+						
+						
+						game[rowofP2][columnofP2] = 'X';
+						whoseturnofGame = true;
+						isPrint = true;
+						
+						
+					}
+
+					else {				//선택한 인덱스가 비어있지 않은 경우
+						
+						System.out.println("비어있지 않은 인덱스입니다. 다른 인덱스를 선택하세요.");
+						isPrint = true;
+						continue;
+					}
+					
+					
+				}
 				
 				
 				
@@ -178,8 +240,12 @@ public class ArrayEx17_정답 {
 		}
 		
 		
-		if (whoseWinner == 'O') System.out.println("승자는 [사용자 P1]입니다"  );
-		else if (whoseWinner == 'X') System.out.println("승자는 [컴퓨터]입니다"  );
+		if (whoseWinner == 'O') System.out.println("승자는 [ 사용자 P1 ]입니다."  );
+		else if (whoseWinner == 'X') {
+			
+			if (choosedNumber == 1) System.out.println("승자는 [ 컴퓨터 ]입니다."  );
+			else System.out.println("승자는 [ 사용자 P2 ] 입니다.");
+		}
 		
 		
 	}
